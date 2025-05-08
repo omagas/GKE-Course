@@ -1,0 +1,39 @@
+# create deployment yaml  sample for spring boot
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-helloworld
+  labels:
+    app: hello-app
+spec:
+  replicas: 2 # 要建立的Pod數量
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # 可以比desire replicas多出來的Pod數量
+      maxUnavailable: 1  # 在任何時間點只有一個Pod可以處於不可用狀態
+  selector:
+    matchLabels:
+      app: spring-boot-helloworld
+  template: # Pod的模板
+    metadata:
+      labels:
+        app: spring-boot-helloworld # 這裡要對應到deployment的label
+    spec:
+      containers:       
+        - name: spring-boot-container # container的名稱
+          image: asia-east1-docker.pkg.dev/project-course-rd/springboot-hello-gke/springboot-hello-gke-image:v1 # container的image,Artifact Registry的image位置
+          imagePullPolicy: Always  # image的拉取策略     
+          ports:
+            - containerPort: 8080   # container的port
+          resources:  # 資源限制
+            limits:
+              cpu: "500m" # cpu的限制
+              memory: "500Mi" # memory的限制
+            requests:
+              cpu: "200m"  # cpu的需求
+              memory: "200Mi" # memory的需求                   
+  
+
+
+

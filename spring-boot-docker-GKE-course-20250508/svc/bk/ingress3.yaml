@@ -1,0 +1,44 @@
+# NS=default envsubst < ingress3.yaml | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${NS}-3-ingress
+  namespace: ${NS}
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: ${NS}-3-ingress
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/healthcheck-path: /
+    
+spec:
+  ingressClassName: alb
+  defaultBackend:
+    service:
+      name: error
+      port:
+        name: svc-port  
+  rules:
+    - http:
+        paths:
+          - path: /first
+            pathType: Prefix
+            backend:
+              service:
+                name: first
+                port:
+                  number: 80
+          - path: /second
+            pathType: Prefix
+            backend:
+              service:
+                name: second
+                port:
+                  name: svc-port
+          - path: /pet
+            pathType: Prefix
+            backend:
+              service:
+                name: petclinic
+                port:
+                  number: 80                  
+                  
