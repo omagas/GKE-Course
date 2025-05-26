@@ -22,7 +22,7 @@ spec:
     spec:
       containers:       
         - name: spring-boot-container # container的名稱
-          image: asia-east1-docker.pkg.dev/project-course-rd/springboot-hello-gke/springboot-hello-gke-image:v1 # container的image,Artifact Registry的image位置
+          image: asia-east1-docker.pkg.dev/project-pic-rd/springboot-hello-gke/springboot-hello-gke-image:v202505191055 # container的image,Artifact Registry的image位置
           imagePullPolicy: Always  # image的拉取策略     
           ports:
             - containerPort: 8080   # container的port

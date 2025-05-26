@@ -19,8 +19,8 @@ public class SpringBootDockerApplication {
  
         @RequestMapping("/")
         public String home() {
-                logger.info("Hello log!");
-                return "Hello World!GKE";
+                logger.info("Hello log!"); // Log message to console
+                return "Hello World!GKE 101";  // This is the response that will be returned when the root URL is accessed
         }
     
 

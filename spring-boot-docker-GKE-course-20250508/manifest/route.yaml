@@ -1,0 +1,18 @@
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: spring-route2
+  namespace: dotnet
+spec:
+  parentRefs:
+  - kind: Gateway
+    name: external-http2
+  hostnames:
+  - "gke-spring-api2.pic-aws-rd.com"
+  rules:
+  - matches:
+    - path:
+        value: /
+    backendRefs:
+    - name: springboot-restful-app-postgres-service
+      port: 80

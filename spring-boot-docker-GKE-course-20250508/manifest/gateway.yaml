@@ -1,0 +1,17 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: external-http2
+  namespace: dotnet
+spec:
+  gatewayClassName: gke-l7-gxlb
+  listeners:
+  - name: http
+    protocol: HTTP
+    port: 80
+    allowedRoutes:
+      namespaces:
+        from: All
+  # addresses:
+  # - type: NamedAddress
+  #   value: external-http2-static-g-ip

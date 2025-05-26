@@ -13,7 +13,7 @@
   - Kubernetes Engine Developer
 - java 11 or 17
 - spring boot 2.7.x or 3.x.x
-- Docker
+- Docker(podman)
 - Maven
 
 
@@ -25,13 +25,13 @@
 mvn clean install -DskipTests
 ```
 
-## 2.2 build docker image
+## 2.2 build podman image
 ```
 sudo su
 ```
 ```
 
-docker build -t springboot-hello-gke-image:v1 -f ./Dockerfile .;
+podman build -t springboot-hello-gke-image:v1 -f ./Dockerfile .;
 ```
 
 
@@ -57,21 +57,22 @@ gcloud artifacts repositories describe springboot-hello-gke --location=asia-east
 ## 2.5 手動部署
 ### ReTag
 ```
-docker tag springboot-hello-gke-image:v1 asia-east1-docker.pkg.dev/project-course-rd/springboot-hello-gke/springboot-hello-gke-image:v202505191055
+podman tag springboot-hello-gke-image:v1 asia-east1-docker.pkg.dev/project-pic-rd/springboot-hello-gke/springboot-hello-gke-image:v1
 ```
 
+podman tag springboot-hello-gke-image:v1 asia-east1-docker.pkg.dev/gkeproject-421913/springboot-hello-gke/springboot-hello-gke-image:v1
 
 ### Push
 ```
-docker push asia-east1-docker.pkg.dev/project-course-rd/springboot-hello-gke/springboot-hello-gke-image:v202505191055
+podman push asia-east1-docker.pkg.dev/project-pic-rd/springboot-hello-gke/springboot-hello-gke-image:v1
 ```
 
-
+podman push asia-east1-docker.pkg.dev/gkeproject-421913/springboot-hello-gke/springboot-hello-gke-image:v1
 
 
 ### 登入GKE cluster
 ```
-gcloud container clusters get-credentials $cluster-name --region asia-east1 --project project-course-rd
+gcloud container clusters get-credentials $cluster-name --region asia-east1 --project project-pic-rd
 ```
 
 
@@ -96,4 +97,24 @@ kubectl get svc
 ### test
 ```
 curl http://${external-ip}/
+```
+
+
+gcloud compute addresses create external-http2-static-g-ip \
+  --region=asia-east1 \
+  --network-tier=STANDARD
+
+
+# Billing project
+
+## 2.5 手動部署
+### ReTag
+```
+podman tag springboot-hello-gke-image:v1 asia-east1-docker.pkg.dev/pic-gcp-billing-staging/springboot-hello-gke/springboot-hello-gke-image:v1
+```
+
+
+### Push
+```
+podman push asia-east1-docker.pkg.dev/pic-gcp-billing-staging/springboot-hello-gke/springboot-hello-gke-image:v1
 ```

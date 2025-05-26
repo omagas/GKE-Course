@@ -4,10 +4,10 @@ kind: Service
 metadata:
   name: spring-boot-helloworld-service  # 這裡是service的名稱
   labels:
-    app: spring-boot-helloworld   # 這裡要對應到deployment的label
+    app: spring-boot-helloworld   # 這裡是service的label
 spec: 
   selector:
-    app: spring-boot-helloworld # 這裡要對應到deployment的label
+    app: spring-boot-helloworld # 這裡要對應到pod的label
   ports:
     - port: 80          # 這裡是service的port
       targetPort: 8080  # 這裡要對應到containerPort
